@@ -20,7 +20,7 @@ At the moment, RallySportED provides exclusive support for the demo version of R
 
 ## The toolset
 #### [RallySportED for DOS](../../../rallysported-dos)
-Track, texture, and AI editors for DOS. These tools can run run on 386/486-class machines. Written in assembly and C++.
+Track, texture, and AI editors for DOS. These tools can be run on 386/486-class machines. Written in assembly and C++.
 
 #### [RallySportED for the browser](../../../rallysported-js)
 Track editor for browsers. Written in JavaScript.
