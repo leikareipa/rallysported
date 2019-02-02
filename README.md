@@ -29,4 +29,4 @@ Track editor for browsers. Written in JavaScript.
 Track and texture editors for Linux and Windows (95 and up). Includes 3d acceleration through OpenGL and Glide; supports Qt and the Win32 API. Written in C++.
 
 #### [SETPAL](../../../rallysported-setpal)
-A small utility for modifying Rally-Sport's hard-coded palettes. Written in C.
+A small DOS utility for modifying Rally-Sport's hard-coded palettes. Written in C.
