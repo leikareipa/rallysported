@@ -1,0 +1,525 @@
+****************************************************************************************************
+*                                                                                                  *
+*                                 THIRD-PARTY DOCUMENTATION OF THE                                 *
+*                           FILE AND DATA FORMATS OF THE RALLY-SPORT DEMO                          *
+*                               (INTERNAL GAME VERSION: BETA 1.00017)                              *
+*                                                                                                  *
+*                                       DOCUMENT VERSION: 1.73                                     *
+*                                       DATE: 3 September 2018                                     *
+*                                                                                                  *
+*                                                                                                  *
+*                                               - - -                                              *
+*                                                                                                  *
+*                                          VERSION HISTORY                                         *
+*                                                                                                  *
+*    1.73 / Sep 2018                                                                               *
+*    ------------------------------------------------------------------------------------------    *
+*    o Clarified entry on MAASTO.00x.                                                              *
+*                                                                                                  *
+*    1.72 / Aug 2018                                                                               *
+*    ------------------------------------------------------------------------------------------    *
+*    o Specified that the 8th byte in the track header is the track's water level.                 *
+*    o Expanded the table of contents to include subsections.                                      *
+*                                                                                                  *
+*    1.70 - 1.71 / May 2018                                                                        *
+*    ------------------------------------------------------------------------------------------    *
+*    o Clarification to information about the hardcoded track object header.                       *
+*    o Small modifications to the document's formatting.                                           *
+*                                                                                                  *
+*    1.2 - 1.60 / July 2017                                                                        *
+*    ------------------------------------------------------------------------------------------    *
+*    o Added basic info on the track object header.                                                *
+*    o Modified entry on CARxy.                                                                    *
+*    o Added basic info on FONTTI.BMP, and clarified the entry on CARxy/vertex indices.            *
+*    o Added info on SBLASTER.CFG and the car header.                                              *
+*    o Restructured the file to separate data in files from data in executables.                   *
+*    o Added info on GAME.DTA and the track header.                                                *
+*                                                                                                  *
+****************************************************************************************************
+
+DISCLAIMER:
+
+	Rally-Sport is (c) 1996, 1997 Jukka Jäkälä, who has not endorsed this document. The document
+	is (c) 2017-2018 Tarpeeksi Hyvae Soft.
+
+	THIS  DOCUMENT IS  PROVIDED "AS IS",  WITHOUT  WARRANTY  OF  ANY  KIND,  EXPRESS OR IMPLIED,
+	INCLUDING BUT  NOT LIMITED TO THE  WARRANTIES OF  MERCHANTABILITY, FITNESS FOR A PARTICULAR
+	PURPOSE AND  NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+	FOR  ANY CLAIM,  DAMAGES OR  OTHER LIABILITY,  WHETHER  IN  AN ACTION OF CONTRACT,  TORT OR
+	OTHERWISE,  ARISING FROM,  OUT OF OR  IN CONNECTION WITH  THE DOCUMENT  OR THE USE OR OTHER
+	DEALINGS IN THE DOCUMENT.
+
+
+What follows are bits of my knowledge about Rally-Sport's file and data formats accumulated while
+creating the RallySportED track editor. The information in this document is in most cases specific
+to the game's demo version, espcially wrt. absolute byte offsets in executables. None of this info
+is guaranteed to be correct, although I can almost guarantee that some of it will not be.
+
+
+TABLE OF CONTENTS:
+	1. DATA IN ASSET FILES
+		1.1...MAASTO.00x
+		1.2...VARIMAA.00x
+		1.3...FONTTI.BMP
+		1.4...KIERROSx.DTA
+		1.5...PALAT.00x
+		1.6...TEXT1.DTA
+		1.7...ANIMS.DTA
+		1.8...GAME.DTA
+		1.9...CARxy.DTA
+		1.10..SBLASTER.CFG
+	2. HARDCODED DATA IN RALLYE.EXE
+		2.1...VGA mode 13h palette
+		2.2...Track prop
+		2.3...Track object header
+		2.4...Car header
+
+1. DATA IN ASSET FILES
++---------------------
+|
+|	1.1 MAASTO.00x
+|	--------------
+|		The MAASTO file contains the track's heightmap.
+|
+|		Structure:
+|		{
+|			B [height]
+|			B [offset]
+|		}
+|
+|		The structure repeats for the number of tiles on the track (64 x 64 or 128 x 128;
+|		also 96 x 96 in the game's registered version).
+|
+|		The [offset] byte is either 0, FF, or 1. In the first two cases, the actual height
+|		is derived from [offset] - [height], so that where [offset] == FF, the height is
+|		positive (above-ground), and where [offset] == 0, the height is negative (below-
+|		ground). The game represent a height of 0 as [height] == 0 && [offset] == 0. When
+|		[offset] == 1, the height is -255 - [height]; i.e. this is a special case for lower-
+|		than -255 below ground.
+|
+|
+|	1.2 VARIMAA.00x
+|	---------------
+|		The VARIMAA file specifies which texture (from a PALAT file) a given tile on the
+|		track uses.
+|
+|		Structure:
+|		{
+|			B [texture index]
+|		}
+|
+|		The structure repeats for the number of tiles on the track.
+|
+|		The [texture index] byte takes on a value from 0 to 255, corresponding to the tex-
+|		ture at that index in the PALAT file.
+|
+|
+|	1.3 FONTTI.BMP
+|	--------------
+|		The FONTTI.BMP bitmap file stores the font textures for digits 0-9 and for certain
+|		non-digit characters.
+|
+|		The actual texture data begins at byte offset 1718. Each byte represents one pixel,
+|		such that a value of 0 is full transparent and 255 fully opaque.
+|
+|		Each character in the set is 10 x 12 pixels.
+|
+|
+|	1.4 KIERROSx.DTA
+|	----------------
+|		The AI opponent's path on the track is defined by the KIERROS file, which contains a
+|		series of checkpoints along which the AI driver races. (Note that the game's AI is
+|		'dumb' in the sense that it doesn't try to avoid obstacles or the like - it simply
+|		drives along its pre-defined path at a pre-determined speed.)
+|
+|		As noted, the AI's path is defined as individual checkpoints placed at select track
+|		tiles, usually about every other tile along the road to be driven on. The AI will follow
+|		the path starting from the first checkpoint, continuing on to the second one, then the
+|		third, etc., until it reaches the last one; after which it will aim again for the first
+|		one and re-iterate.
+|
+|		Structure:
+|		{
+|			W [tile x]
+|			W [tile y]
+|			W [orientation]
+|			W [speed]
+|		}
+|
+|		The structure repeats until an 8-byte chain of FF is encountered. But note that
+|		there can be at most 511 checkpoints in a KIERROS file.
+|
+|		The [tile x] and [tile y] words define the tile coordinates of this checkpoint on the
+|		track, such that the actual tile coordinates are [tile x] * 2, [tile y] * 2.
+|
+|		The [orientation] word specifies the direction, relative to the game's camera, toward
+|		which the AI should try to orient its car on this checkpoint. Valid values are in the
+|		range 0-510, such that 0 == up, 130 == left, 255 == down, and 380 == right.
+|
+|		The [speed] word instructs the AI on how fast to drive by this checkpoint. It appears
+|		that the maximum value is about 70. Note that the game's difficulty setting will also
+|		scale the AI's speed up/down, so [speed] in a sense defines a baseline.
+|
+|
+|	1.5 PALAT.00x
+|	-------------
+|		The PALAT file contains a set of 256 or so textures with which the track can decorate
+|		its surface. Each texture is 16 x 16 pixels.
+|
+|		There are two separate PALAT files in the game's demo version, PALAT.001 and PALAT.002.
+|		The latter is used by track #5 only.
+|
+|		(The ANIMS file, discussed elsewhere in this document, has the same structure as the PALAT
+|		file, and in fact seems to just be a duplicated PALAT file with some of the textures re-
+|		painted. Interestingly, looking through the ANIMS file's textures, one can see what is
+|		likely a snapshot of early-in-development track textures where they haven't been painted
+|		over, including letters that spell TOYOTA, and a Shell logo, both of which were changed
+|		for the game's release version.)
+|
+|		Structure:
+|		{
+|			B [palette index]
+|		}
+|
+|		The structure repeats for 256 * 16 * 16 - 12 bytes (the last texture is missing
+|		its last 12 bytes in the game's demo version). The first 16 * 16 bytes are of the first
+|		texture, the next 16 * 16 bytes are the second texture, etc.
+|
+|		The [palette index] byte specifies the color of the given pixel in the given texture, by
+|		referencing an index in the game's color palette (see entry for PALETTE). Valid values are
+|		0-31. You can assign values greater than 31, but they will result in artefacting when the
+|		game applies shading to them - in other words, values above 31 are reserved for shaded
+|		versions of the first 32 colors. (You could probably hack full 256 colors into the game by
+|		disabling shading entirely and making use of all colors for regular texture-painting.) 
+|
+|
+|	1.6 TEXT1.DTA
+|	-------------
+|		The somewhat misleadingly-named TEXT1 file contains textures for the various 3-D objects
+|		on the track, like trees, billboards, etc. (but not 2-D ones like spectators and bushes).
+|		RallySportED calls these 3-D objects 'props'.
+|	
+|		For the structure of the TEXT1 file, refer to the PALAT entry, as the underlying idea is
+|		the same - they're both just arrays of indexed pixel colors. But note that unlike in the
+|		PALAT file, the textures in TEXT1 come in various sizes. (You can display them all at once
+|		as two 128 x 88 textures, though.)
+|
+|		The u,v coordinates for accessing the individual textures in the TEXT1 file are given in
+|		the game's executables. In RALLYE.EXE, find this information starting at byte offset 123614.
+|		For more information, refer to the SUBTEXTURE block in the CARxy entry in this document.
+|
+|
+|	1.7 ANIMS.DTA
+|	-------------
+|		The ANIMS file is in effect a copy-pasted PALAT file, where some of the textures have been
+|		replaced with frames of various animations (smoke, fire, air bubbles).
+|
+|		Refer to the PALAT entry for applicable information.
+|
+|
+|	1.8 GAME.DTA
+|	------------
+|		The GAME.DTA file mediates communication of track parameters from VALIKKO.EXE, which runs
+|		the game's menu screens, to RALLYE.EXE, which runs the actual races.
+|
+|		Structure:
+|		{
+|			B/ 0 [track id]
+|			B/ 1 [number of laps]
+|			B/ 2 [ai difficulty]
+|			B/ 3 [steering sensitivity]
+|			...
+|			B/30 [daytime yes/no]
+|			...
+|			B/32 [player's car]
+|			B/33 [ai's car]
+|			B/34 [sound on/off]
+|			B/35 [race mode]
+|			B/36 [use joystick yes/no]
+|			...
+|		}
+|
+|		The [race mode] byte decides whether you're racing for practice (== 32d), vs. a ghost car
+|		(== 1), or vs. the AI (== 0)
+|
+|		The [track id] byte tells which track to race on. Note that this value is 0-indexed, so that
+|		track #1 has an ID of 0.
+|
+|		The rest of the parameters are fairly self-explanatory. Note that the structure above omits
+|		several bytes - their purpose is unknown.
+|
+|
+|	1.9 CARxy.DTA
+|	-------------
+|		The CAR file contains the vertices and textures of a 3-D car model. Structurally, it's a bit
+|		more complicated than the other files of the game, but still pretty simple to parse.
+|
+|		Structure:
+|		{
+|			TEXTURE
+|			{
+|				B [palette index]
+|			}
+|
+|			W [pointer to start of VERTEX_COORDINATES block]
+|			W [pointer to start of POLYGON block]
+|			W [pointer to start of SUBTEXTURE block]
+|
+|			UNKNOWN
+|			{
+|				B (?)
+|			}
+|
+|			POLYGON
+|			{
+|				B [texture/color index]
+|				B [textured yes/no]
+|				W (unknown pointer)
+|				W (?)
+|				W (?)
+|				W (?)
+|
+|				W [number of vertex indices]
+|				VERTEX_INDEX
+|				{
+|					W [vertex index]
+|				}
+|			}
+|		
+|			W [number of vertices]
+|			VERTEX_COORDINATES
+|			{
+|				W [x]
+|				W [y]
+|				W [z]
+|			}
+|
+|			SUBTEXTURE
+|			{
+|				W [width]
+|				W [height]
+|				W (?)
+|				B [x offset]
+|				B [y offset]
+|				B [alpha yes/no]
+|				B (?)
+|			}
+|		}
+|
+|		The TEXTURE block repeats for 128 * 128 bytes. The texture contained in it is
+|		128 x 128 in size, but it's further split into several subtextures as instructed in
+|		the SUBTEXTURE block.
+|
+|		The SUBTEXTURE block repeats until a 4- or 8-byte chain of FF is encountered. Each sub-
+|		texture is a smaller window within the main 128 x 128 texture.
+|
+|			The [width] and [height] words give the dimensions of the subtexture, but
+|			such that the actual dimensions appear to be [width] / 2, [height] / 2.
+|
+|			The [x offset] and [y offset] bytes give the starting position of this
+|			subtexture within the main texture. It seems that [y offset] should be
+|			multiplied by 2.
+|
+|			The [has alpha] byte determines whether color indices of 0 in the texture
+|			should be see-through or not. Where [has alpha] == 1, they are see-
+|			through, otherwise not.
+|
+|		The purpose of the UNKNOWN block is unknown. Its data appears to affect the car's tires.
+|
+|		The POLYGON block repeats until a 4- or 8-byte chain of FF is encountered. The car's 3-D
+|		mesh is made up of several polygons, e.g. hood, tire, trunk, each of which is defined in
+|		a POLYGON block of its own.
+|
+|			If the [has texture] byte is 0, the polygon is to be colored solid,
+|			with the color's palette index given in the [texture/color index] byte.
+|			Otherwise, [texture/color index] will give the index of the subtexture
+|			with which the polygon is to be colored.
+|
+|			The VERTEX_INDEX block gives the vertices of the polygon. The number of
+|			times the VERTEX_INDEX block repeats is given in the preceding word, but
+|			such that its value is multiplied by 2. This is because the vertices of
+|			a polygon are given as line segments. A polygon with three vertices would
+|			have its vertex indices defined as "1, 2, 2, 3, 3, 1". In other words,
+|			the list begins with the first vertex, which connects to the second ver-
+|			tex. The second vertex connects to the third, and the loop has to be
+|			closed by connecting the third vertex back to the first one.
+|
+|				The [vertex index] word gives an index to the VERTEX_COORDINATES
+|				block. If, for instance, the first vertex in the polygon has an
+|				index of 5, the coordinates of that vertex are found in the 5th 
+|				block of the vertex coordinates list. But note that the actual
+|				vertex index value is given from [vertex index] / 6.
+|
+|		The number of times the VERTEX_COORDINATES block repeats is given in the
+|		preceding word.
+|
+|
+|	1.10 SBLASTER.CFG
+|	-----------------
+|		The SBLASTER.CFG configuration file stores the sound card parameters as set with the
+|		SETSOUND.EXE utility. There are 8 bits of data in the file.
+|
+|		(Note that for sound, the game only supports the Sound Blaster series.)
+|
+|		Structure:
+|		{
+|			W/0: [io address]
+|			B/2: [dma]
+|			B/3: [irq]
+|			B/4: [sound test successful yes/no]
+|			B/5: (?)
+|			B/6: (?)
+|			B/7: (?)
+|		}
+|
+|		The SETSOUND.EXE utility includes a test function with which you can check whether you
+|		got your settings right. The [was the sound test successful?] byte reflects whether the
+|		test completed successfully. If this byte is 0, the game will force sound off, regardless
+|		of whether the sound configuration is otherwise correct.
+|
+|
++--------------------------------------------------------------------------------------------------
+
+
+
+2. HARDCODED DATA IN RALLYE.EXE
++------------------------------
+|
+|	2.1 VGA mode 13h palette
+|	------------------------
+|		The game makes use of three palettes, each with 32 usable colors. There are in fact four
+|		different palettes in the game data, but one of them is never used. Track #5 uses the 2nd
+|		palette, track #8 gets the 4th palette, and the other tracks all use the 1st palette.
+|
+|		The palettes are hard-coded into RALLYE.EXE and VALIKKO.EXE. In RALLYE.EXE, you can find
+|		palette x at byte offset 131798 + ((x - 1) * 3 * 32), where 3 is the number of color
+|		channels (red, green, blue), 32 is the number of colors per palette, and 131798 is the
+|		offset of the red byte of the first color in the first palette.
+|
+|		Structure:
+|		{
+|			B [red]
+|			B [green]
+|			B [blue]
+|		}
+|
+|		The structure repeats 4 * 32 times. The first 32 blocks are the colors of the first palette,
+|		the next of the second, etc.
+|
+|		The [red], [green], and [blue] bytes specify the color of the given palette entry. Valid
+|		values are 0-63 (63 corresponds to 255 in the more common 8-bit range; convert from the
+|		latter by dividing by 4 and round down).
+|
+|
+|	2.2 Track header
+|	----------------
+|		For each track in the game, there is an 18-byte header hardcoded into RALLYE.EXE that
+|		provides certain track parameters.
+|
+|		You can find the xth header in RALLYE.EXE at byte offset 86085 + ((x - 1) * 18), where
+|		86085 is the byte offset of the first track's header, and 18 is the track header's size
+|		in bytes.
+|
+|		Structure:
+|		{
+|			W    [pointer to the list of items on this track]
+|			W    [pointer to a list of car starting positions?]
+|			W    [track x size]
+|			W    [track y size]
+|			B/ 8 [water level]
+|			B/ 9 (?)
+|			B/10 [palat id]
+|			B/11 [palette id]
+|			B/12 (?)
+|			B/13 [checkpoint x position]
+|			B/14 (?)
+|			B/15 [checkpoint y position]
+|			W    (pointer to something?)
+|		}
+|
+|		The structure repeats 8 times, for the 8 tracks in the game's demo version.
+|
+|		The [track size x] and [track size y] bytes define the size of the track in number of
+|		tiles. Note that the actual size is [track size x] * 2, [track size y] * 2.
+|
+|		The [checkpoint x position] and [checkpoint x position] bytes give the tile on which the
+|		track's checkpoint is located. The player's car has to pass within a certain distance of
+|		this checkpoint for the current lap to be timed and valid. Note that the actual position
+|		of the checkpoint is [checkpoint x position] * 2, [checkpoint y position] * 2.
+|
+|		The [palat id] and [palette id] bytes set which PALAT file and PALETTE the track
+|		uses.
+|
+|
+|	2.3 Track prop header
+|	---------------------
+|		For each 3-D prop (trees, etc.) on a track, there is a 12-byte header in the game executable
+|		that defines the shape and location of that prop on that particular track.
+|
+|		The header of the first track's first prop is found in RALLYE.EXE at byte offset 86283. The
+|		headers of the rest of the first track's props follow, after which come the headers of the
+|		second track's props, etc.
+|
+|       Note that each track's first prop header is preceded by a word giving the total number of
+|		props on that track.
+|
+|		Structure:
+|		{
+|			W/ 0: [pointer to prop's vertex coordinates]
+|			W/ 2: [pointer to prop's vertex indices]
+|			W/ 4: (pointer to prop's collision mesh?)
+|			B/ 6: [relative x position]
+|			B/ 7: [tile x position on the track]
+|			B/ 8: [relative y position]
+|			B/ 9: [tile y position on the track]
+|			B/10: [z position (height)]
+|			B/11: (?)
+|		}
+|
+|		At the start of the header, you find three pointers to various locations in the executable
+|		where the prop's 3-D mesh is defined. To follow a given pointer in RALLYE.EXE, add 70560 to
+|		its base value and you'll have the correct byte offset.
+|
+|		The [tile x position on the track] and [tile y position on the track] bytes locate the prop
+|		on the track. Note that you need to multiply both values by 2 to get the actual tile
+|		coordinates. This also means that you can place props only on every second tile. For finer
+|		control over the prop's location, use the [relative x position] and [relative y position]
+|		bytes, which take values from 0 to 255, and move the prop in finer increments within the
+|		one-tile gap.
+|
+|		If the [z position (height)] byte is set to FF, the game will place the prop at the height
+|		of the terrain below it. Values other than FF let you manually specify a height.
+|
+|
+|	2.4 Car header
+|	--------------
+|		Some basic car parameters are given in the hard-coded car header. For each car, there is a
+|		17-byte header of this kind. 
+|
+|		You find the xth car header in RALLYE.EXE at byte offset 79422 + ((x - 1) * 17), where 79422
+|		is the byte offset of the first car's header, and 17 is a header's size in bytes.
+|
+|		Structure:
+|		{
+|			B/ 0 [car's filename, 9 bytes]
+|			B/ 9 0 (null-terminates filename)
+|			B/10 0
+|			B/11 [style of headlights at night]
+|			B/12 (?)
+|			W/13 [offset of pointer to car's audio file name]
+|			B/15 (?)
+|			B/16 (?)
+|		}
+|
+|		The structure repeats 8 times, for 8 cars.
+|
+|		The somewhat convoluted [offset to pointer to car's audio file name] word points to a byte
+|		offset which gives a word that gives the byte offset of the first character in the car's
+|		audio file's name. You find the offset of the pointer from OFFS == [offset to pointer to
+|		car's audio file's name] + 70560, and the file name is at 70560 + the offset given in OFFS.
+|		Note specifically that the offset in OFFS is a word.
+|
+|
++--------------------------------------------------------------------------------------------------
+
+
