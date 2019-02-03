@@ -1,7 +1,11 @@
 {
     "host_project":"rallysported-js",
     "collection":"server-tracks",
-    "comments":["A database of server-side tracks accessible to users of the web version of RallySportED."],
+    "comments": [
+        "A database of server-side tracks accessible to users of the web version of RallySportED.",
+        "The 'id' field should provide an identifier string that uniquely identifies that track. Note that it'll be used e.g. as a user-facing URL parameter, and as the base name of the track's files in disk.",
+        "The 'version' field provides the track's version as per the track's creator. The initial release might be version 1, after some post-release touchups it might be 2, etc. Note that each version of a track should have a unique 'id'."
+    ],
 
     "tracks": [
         {
