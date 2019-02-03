@@ -1,0 +1,88 @@
+{
+    "host_project":"rallysported-js",
+    "collection":"server-tracks",
+    "comments":["A database of server-side tracks accessible to users of the web version of RallySportED."],
+
+    "tracks": [
+        {
+            "id":"ag8ik8",
+            "name":"Herbmare",
+            "author":"Tarpeeksi Hyvae Soft",
+            "version":1,
+            "year":2017,
+            "top_laptimes":["0:17:70 Tarpeeksi Hyvae Soft"],
+            "difficulty":-1,
+            "user_rating":-1
+        },
+        {
+            "id":"cdcdd3",
+            "name":"Kiskarun",
+            "author":"Tarpeeksi Hyvae Soft",
+            "version":1,
+            "year":2016,
+            "top_laptimes":["0:23:25 Tarpeeksi Hyvae Soft"],
+            "difficulty":-1,
+            "user_rating":-1
+        },
+        {
+            "id":"k2dief",
+            "name":"Sadantie",
+            "author":"Tarpeeksi Hyvae Soft",
+            "version":1,
+            "year":2017,
+            "top_laptimes":["0:34:95 Tarpeeksi Hyvae Soft"],
+            "difficulty":-1,
+            "user_rating":-1
+        },
+        {
+            "id":"b4g35b",
+            "name":"Hakkuu",
+            "author":"Tarpeeksi Hyvae Soft",
+            "version":1,
+            "year":2017,
+            "top_laptimes":["0:19:77 Tarpeeksi Hyvae Soft"],
+            "difficulty":-1,
+            "user_rating":-1
+        },
+        {
+            "id":"2kf29k",
+            "name":"Klorofyl",
+            "author":"Tarpeeksi Hyvae Soft",
+            "version":1,
+            "year":2017,
+            "top_laptimes":["0:19:89 Tarpeeksi Hyvae Soft"],
+            "difficulty":-1,
+            "user_rating":-1
+        },
+        {
+            "id":"jdj6hf",
+            "name":"Lumitaso",
+            "author":"Tarpeeksi Hyvae Soft",
+            "version":1,
+            "year":2016,
+            "top_laptimes":[],
+            "difficulty":-1,
+            "user_rating":-1
+        },
+        {
+            "id":"247cbg",
+            "name":"Viaaussi",
+            "author":"Tarpeeksi Hyvae Soft",
+            "version":1,
+            "year":2016,
+            "top_laptimes":["0:23:58 Tarpeeksi Hyvae Soft"],
+            "difficulty":-1,
+            "user_rating":-1
+        },
+        {
+            "id":"ej564k",
+            "name":"Haastava",
+            "author":"Tarpeeksi Hyvae Soft",
+            "version":1,
+            "year":2017,
+            "top_laptimes":[],
+            "difficulty":-1,
+            "user_rating":-1
+        }
+    ]
+}
