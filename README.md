@@ -25,7 +25,7 @@ Track, texture, and AI editors for DOS. These tools can be run on 386/486-class 
 #### [RallySportED for the browser](../../../rallysported-js)
 Track editor for browsers. Written in JavaScript.
 
-#### [RallySportED for desktops](../../../rallysported-diverse) (TBA)
+#### [RallySportED for desktops](../../../rallysported-diverse)
 Track and texture editors for Linux and Windows (95 and up). Includes 3d acceleration through OpenGL and Glide; supports Qt and the Win32 API. Written in C++.
 
 #### [SETPAL](../../../rallysported-setpal)
