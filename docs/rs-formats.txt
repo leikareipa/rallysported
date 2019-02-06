@@ -39,7 +39,7 @@
 DISCLAIMER:
 
     Rally-Sport is (c) 1996, 1997 Jukka Jäkälä. No endorsement of this document by Mr. Jäkälä is
-	claimed. The document is (c) 2017-2019 Tarpeeksi Hyvae Soft.
+    claimed. The document is (c) 2017-2019 Tarpeeksi Hyvae Soft.
 
     THIS  DOCUMENT IS  PROVIDED "AS IS",  WITHOUT  WARRANTY  OF  ANY  KIND,  EXPRESS OR IMPLIED,
     INCLUDING BUT  NOT LIMITED TO THE  WARRANTIES OF  MERCHANTABILITY, FITNESS FOR A PARTICULAR
