@@ -19,13 +19,17 @@ And they're available for a variety of platforms:
 At the moment, RallySportED provides exclusive support for the demo version of Rally-Sport, which you can find online and also bundled with the binary distributions of RallySportED. The full commercial release of the game is not supported, at this time (generally speaking, the commercial release adds a couple of tracks, fixes a few bugs, and introduces split-screen support, but is otherwise the same as the demo version).
 
 # The toolset
-**[RallySportED for DOS](../../../rallysported-dos)** &mdash; Track, texture, and AI editors for DOS. These tools can be run on 386/486-class machines. Written in assembly and C++.
+**[RallySportED for DOS](../../../rallysported-dos)**\
+Track, texture, and AI editors for DOS. These tools can be run on 386/486-class machines. Written in assembly and C++.
 
-**[RallySportED for the browser](../../../rallysported-js)** &mdash; Track editor for browsers. Written in JavaScript.
+**[RallySportED for the browser](../../../rallysported-js)**\
+Track editor for browsers. Written in JavaScript.
 
-**[RallySportED for desktops](../../../rallysported-diverse)** &mdash; Track and texture editors for Linux and Windows (95 and up). Includes 3d acceleration through OpenGL and Glide; supports Qt and the Win32 API. Written in C++.
+**[RallySportED for desktops](../../../rallysported-diverse)**\
+Track and texture editors for Linux and Windows (95 and up). Includes 3d acceleration through OpenGL and Glide; supports Qt and the Win32 API. Written in C++.
 
-**[SETPAL](../../../rallysported-setpal)** &mdash; A small DOS utility for modifying Rally-Sport's hard-coded palettes. Written in C.
+**[SETPAL](../../../rallysported-setpal)**\
+A small DOS utility for modifying Rally-Sport's hard-coded palettes. Written in C.
 
 # Content made with RallySportED
 You can find tracks made with RallySportED under [modded-content/tracks/](modded-content/tracks/), or see a list of them [live on the web](http://www.tarpeeksihyvaesoft.com/rallysported/tracklist/).
