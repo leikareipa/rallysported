@@ -1,6 +1,4 @@
-![](screenshots/tiny/rgeo-web.png?raw=true) ![](screenshots/tiny/rsed.png?raw=true) ![](screenshots/tiny/rai.png?raw=true) ![](screenshots/tiny/rtex.png?raw=true)
-
-`Note!` This is an umbrella repository for the various projects that make up RallySportED. Links to those projects are provided within this readme.
+`Note!` This is an umbrella repository for the various projects that make up RallySportED. You'll find links to the individual projects, below.
 
 # RallySportED
 RallySportED is a set of tools for modding the cult 1996 DOS game Rally-Sport.
@@ -20,6 +18,8 @@ And they're available for a variety of platforms:
 
 At the moment, RallySportED provides exclusive support for the demo version of Rally-Sport, which you can find online and also bundled with the binary distributions of RallySportED. The full commercial release of the game is not supported, at this time (generally speaking, the commercial release adds a couple of tracks, fixes a few bugs, and introduces split-screen support, but is otherwise the same as the demo version).
 
+![](screenshots/tiny/rgeo-web.png) ![](screenshots/tiny/rsed.png) ![](screenshots/tiny/rai.png) ![](screenshots/tiny/rtex.png)
+
 # The toolset
 **[RallySportED for DOS](../../../rallysported-dos)**\
 Track, texture, and AI editors for DOS. These tools can be run on 386/486-class machines. Written in assembly and C++.
@@ -34,4 +34,8 @@ Track and texture editors for Linux and Windows (95 and up). Includes 3d acceler
 A small DOS utility for modifying Rally-Sport's hard-coded palettes. Written in C.
 
 # Content made with RallySportED
-You can find tracks made with RallySportED under [modded-content/tracks/](modded-content/tracks/), or see a list of them [live on the web](http://www.tarpeeksihyvaesoft.com/rallysported/tracklist/).
+<img align="left" src="screenshots/tracks/b4g35b_tiny.png">
+
+You can find tracks made with RallySportED under the [modded-content/tracks/](modded-content/tracks/) directory.
+
+Or visit [http://www.tarpeeksihyvaesoft.com/rallysported/track-list/](http://www.tarpeeksihyvaesoft.com/rallysported/track-list/) for a web version of the track listing.
