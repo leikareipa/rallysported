@@ -14,17 +14,24 @@ And they're available for a variety of platforms:
 - DOS
 - Linux
 - Windows (95 through 10)
-- Browser (Chrome, Firefox, Opera, and no doubt others)
+- Browsers (Chrome, Firefox, Opera, ...)
 
 At the moment, RallySportED provides exclusive support for the demo version of Rally-Sport, which you can find online and also bundled with the binary distributions of RallySportED. The full commercial release of the game is not supported, at this time (generally speaking, the commercial release adds a couple of tracks, fixes a few bugs, and introduces split-screen support, but is otherwise the same as the demo version).
 
-![](screenshots/tiny/rgeo-web.png) ![](screenshots/tiny/rsed.png) ![](screenshots/tiny/rai.png) ![](screenshots/tiny/rtex.png)
+<table>
+    <tr>
+        <td align="center"><img src="screenshots/tiny/rsed.png"></td>
+        <td align="center"><img src="screenshots/tiny/rai.png"></td>
+        <td align="center"><img src="screenshots/tiny/rtex.png"></td>
+        <td align="center"><img src="screenshots/tiny/rgeo-web.png"></td> 
+    </tr>
+</table>
 
 # The toolset
 **[RallySportED for DOS](../../../rallysported-dos)**\
 Track, texture, and AI editors for DOS. These tools can be run on 386/486-class machines. Written in assembly and C++.
 
-**[RallySportED for the browser](../../../rallysported-js)**\
+**[RallySportED for browsers](../../../rallysported-js)**\
 Track editor for browsers. Written in JavaScript.
 
 **[RallySportED for desktops](../../../rallysported-diverse)**\
