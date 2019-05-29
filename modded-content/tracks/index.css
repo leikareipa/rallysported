@@ -12,7 +12,7 @@ body
     width: 100%;
     height: 100%;
     display: grid;
-    grid-gap: 27px;
+    grid-gap: 37px;
     justify-items: center;
     grid-template-columns:
     repeat(auto-fit, minmax(350px, 1fr));
@@ -22,7 +22,7 @@ body
 {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 20px 2px #00000080);
+    filter: drop-shadow(0 20px 1px rgba(0, 0, 0, 0.6));
     position: relative;
     z-index: 1;
 }
@@ -40,23 +40,23 @@ body
     padding-bottom: 5px;
     border-radius: 2px;
     background-color: transparent;
-    border: 1px dashed black;
+    border: none;
 }
 
 .track-title
 {
 	display:inline-block;
     vertical-align: middle;
-    font-size: 230%;
+    font-size: 260%;
     font-family: 'Permanent Marker', sans-serif;
     letter-spacing: 1px;
     color: rgb(190, 119, 25);
     position: relative;
     margin-right: 5px;
-    margin-top: -20px;
+    margin-top: -15px;
     margin-bottom: -6px;
     z-index: 2;
-    transform: rotate(1.5deg);
+    transform: rotate(1deg);
 }
 
 .track-view-tag
@@ -66,19 +66,18 @@ body
     font-family: 'Quicksand', sans-serif;
     white-space: nowrap;
     background-color: transparent;
-    color: rgb(194, 122, 27);
+    color: rgb(0, 0, 0);
     border-radius: 0px 10px 10px 0px;
     padding: 7px;
     padding-right: 11px;
     padding-left: 11px;
-    font-size: 70%;
+    font-size: 75%;
     margin: 2px;
     margin-left: -5px;
     position: relative;
     z-index: 2;
     user-select: none;
-    border: 1px dashed rgb(185, 115, 24);
-    border-left: none;
+    border: none;
 }
 
 .track-download-tag
@@ -88,25 +87,24 @@ body
     display: inline-block;
     font-family: 'Quicksand', sans-serif;
     white-space: nowrap;
-    color: rgb(185, 115, 24);
-    background-color: rgb(44, 44, 44);
-    padding: 8px;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-right: 2px;
-    font-size: 70%;
+    color: #000000;
+    padding: 2px;
+    padding-right: 11px;
+    font-size: 75%;
     cursor: pointer;
     margin: 0px;
     position: relative;
     z-index: 2;
     user-select: none;
+    border-right: 1px solid black;
 }
 
 .info-text
 {
     font-family: 'Quicksand', sans-serif;
-    font-size: 85%;
-    color: rgb(14, 14, 14);
-    transform: rotate(-1deg);
-    margin-top: 9px;
+    font-weight: bold;
+    font-size: 75%;
+    color: rgb(0, 0, 0);
+    transform: rotate(0deg);
+    margin-top: 0px;
 }

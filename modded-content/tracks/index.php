@@ -6,7 +6,7 @@
         <link rel="stylesheet" type="text/css" href="index.css">
         <link href="https://fonts.googleapis.com/css?family=Permanent+Marker|Quicksand" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-        <title>RallySportED track list</title>
+        <title>RallySportED - Track List</title>
     </head>
     <body>
         <?php
@@ -48,9 +48,9 @@
 
                     printf("\n<div class='track'>");
                       printf("\n<div><a href='img/isometric/%s.png'><img src='img/isometric/%s.png'></a></div>", $id, $id);
-                      printf("\n<div class='track-title'>%s</div>", strtolower($name . "."));
-                      printf("\n<div style='transform: rotate(1deg);'>");
-                        printf("\n<a class='track-download-tag' href='files/%s.zip' download='%s.zip'><i class='fas fa-file-download'></i></a>", $id, $name);
+                      printf("\n<div class='track-title'>%s</div>", $name);
+                      printf("\n<div style='transform: rotate(0deg);'>");
+                        printf("\n<a class='track-download-tag' href='files/%s.zip' download='%s.zip'><i class='fas fa-file-download'></i> Download</a>", $id, $name);
                         printf("\n<a class='track-view-tag' target='_blank' rel='noopener' href='%s?track=%s'><i class='fas fa-cut'></i> Edit a copy in RallySportED</a>", $rsedWebpage, $id);
                       printf("\n</div>");
                       printf("\n<div class='info-text'><i class='fas fa-stopwatch'></i> Lap time to beat: %s</div>", $topLaptime);
