@@ -40,6 +40,9 @@ Track and texture editors for Linux and Windows (95 and up). Includes 3d acceler
 **[SETPAL](../../../rallysported-setpal)**\
 A small DOS utility for modifying Rally-Sport's hard-coded palettes. Written in C.
 
+**[SETKEYS](../../../rallysported-setkeys)**\
+A small DOS utility for modifying Rally-Sport's hard-coded keyboard driving controls. Written in oldschool C++.
+
 # Content made with RallySportED
 <img align="left" src="screenshots/tracks/b4g35b_tiny.png">
 
