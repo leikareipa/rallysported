@@ -50,7 +50,6 @@
                       printf("\n<div><a href='img/isometric/%s.png'><img src='img/isometric/%s.png'></a></div>", $id, $id);
                       printf("\n<div class='track-title'>%s</div>", $name);
                       printf("\n<div style='transform: rotate(0deg);'>");
-                        printf("\n<a class='track-download-tag' href='files/%s.zip' download='%s.zip'><i class='fas fa-file-download'></i> Download</a>", $id, $name);
                         printf("\n<a class='track-view-tag' target='_blank' rel='noopener' href='%s?track=%s'><i class='fas fa-cut'></i> Edit a copy in RallySportED</a>", $rsedWebpage, $id);
                       printf("\n</div>");
                       printf("\n<div class='info-text'><i class='fas fa-stopwatch'></i> Lap time to beat: %s</div>", $topLaptime);

@@ -66,12 +66,12 @@ body
     font-family: 'Quicksand', sans-serif;
     white-space: nowrap;
     background-color: transparent;
-    color: rgb(0, 0, 0);
+    color: black;
     border-radius: 0px 10px 10px 0px;
     padding: 7px;
     padding-right: 11px;
     padding-left: 11px;
-    font-size: 75%;
+    font-size: 100%;
     margin: 2px;
     margin-left: -5px;
     position: relative;
@@ -103,7 +103,7 @@ body
 {
     font-family: 'Quicksand', sans-serif;
     font-weight: bold;
-    font-size: 75%;
+    font-size: 85%;
     color: rgb(0, 0, 0);
     transform: rotate(0deg);
     margin-top: 0px;
