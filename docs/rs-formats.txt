@@ -4,12 +4,17 @@
 *                           FILE AND DATA FORMATS OF THE RALLY-SPORT DEMO                          *
 *                               (INTERNAL GAME VERSION: BETA 1.00017)                              *
 *                                                                                                  *
-*                                       DOCUMENT VERSION: 1.73                                     *
-*                                       DATE: 3 September 2018                                     *
+*                                       DOCUMENT VERSION: 1.74                                     *
+*                                          DATE: 1 Feb 2020                                        *
 *                                                                                                  *
 *                                               - - -                                              *
 *                                                                                                  *
 *    DOCUMENT CHANGELOG:                                                                           *
+*                                                                                                  *
+*    1.74 / Feb 2020                                                                               *
+*    ------------------------------------------------------------------------------------------    *
+*    o Corrected entries on KIERROSx.DTA and Track header about checkpoint coordinates             *
+*      being in world units, not in track tile units.                                              *
 *                                                                                                  *
 *    1.73 / Sep 2018                                                                               *
 *    ------------------------------------------------------------------------------------------    *
@@ -70,7 +75,7 @@ TABLE OF CONTENTS:
     2. HARDCODED DATA IN RALLYE.EXE
         2.1...VGA mode 13h palette
         2.2...Track prop
-        2.3...Track object header
+        2.3...Track prop header
         2.4...Car header
 
 1. DATA IN ASSET FILES
@@ -82,8 +87,8 @@ TABLE OF CONTENTS:
 |
 |        Structure:
 |        {
-|            B [height]
-|            B [offset]
+|            B/ 0 [height]
+|            B/ 1 [offset]
 |        }
 |
 |        The structure repeats for the number of tiles on the track (64 x 64 or 128 x 128;
@@ -104,7 +109,7 @@ TABLE OF CONTENTS:
 |
 |        Structure:
 |        {
-|            B [texture index]
+|            B/ 0 [texture index]
 |        }
 |
 |        The structure repeats for the number of tiles on the track.
@@ -139,17 +144,17 @@ TABLE OF CONTENTS:
 |
 |        Structure:
 |        {
-|            W [tile x]
-|            W [tile y]
-|            W [orientation]
-|            W [speed]
+|            W/ 0 [x]
+|            W/ 2 [y]
+|            W/ 4 [orientation]
+|            W/ 6 [speed]
 |        }
 |
 |        The structure repeats until an 8-byte chain of FF is encountered. But note that
 |        there can be at most 511 checkpoints in a KIERROS file.
 |
-|        The [tile x] and [tile y] words define the tile coordinates of this checkpoint on the
-|        track, such that the actual tile coordinates are [tile x] * 2, [tile y] * 2.
+|        The [x] and [y] words define the world coordinates of this checkpoint. The coordinates
+|        can be converted into track tile units by dividing them by 128.
 |
 |        The [orientation] word specifies the direction, relative to the game's camera, toward
 |        which the AI should try to orient its car on this checkpoint. Valid values are in the
@@ -177,7 +182,7 @@ TABLE OF CONTENTS:
 |
 |        Structure:
 |        {
-|            B [palette index]
+|            B/ 0 [palette index]
 |        }
 |
 |        The structure repeats for 256 * 16 * 16 - 12 bytes (the last texture is missing
@@ -362,13 +367,13 @@ TABLE OF CONTENTS:
 |
 |        Structure:
 |        {
-|            W/0: [io address]
-|            B/2: [dma]
-|            B/3: [irq]
-|            B/4: [sound test successful yes/no]
-|            B/5: (?)
-|            B/6: (?)
-|            B/7: (?)
+|            W/ 0 [io address]
+|            B/ 2 [dma]
+|            B/ 3 [irq]
+|            B/ 4 [sound test successful yes/no]
+|            B/ 5 (?)
+|            B/ 6 (?)
+|            B/ 7 (?)
 |        }
 |
 |        The SETSOUND.EXE utility includes a test function with which you can check whether you
@@ -397,9 +402,9 @@ TABLE OF CONTENTS:
 |
 |        Structure:
 |        {
-|            B [red]
-|            B [green]
-|            B [blue]
+|            B/ 0 [red]
+|            B/ 1 [green]
+|            B/ 2 [blue]
 |        }
 |
 |        The structure repeats 4 * 32 times. The first 32 blocks are the colors of the first palette,
@@ -421,30 +426,29 @@ TABLE OF CONTENTS:
 |
 |        Structure:
 |        {
-|            W    [pointer to the list of items on this track]
-|            W    [pointer to a list of car starting positions?]
-|            W    [track x size]
-|            W    [track y size]
+|            W/ 0 [pointer to the list of items on this track]
+|            W/ 2 [pointer to a list of car starting positions?]
+|            W/ 4 [track width]
+|            W/ 6 [track height]
 |            B/ 8 [water level]
 |            B/ 9 (?)
 |            B/10 [palat id]
 |            B/11 [palette id]
-|            B/12 (?)
-|            B/13 [checkpoint x position]
-|            B/14 (?)
-|            B/15 [checkpoint y position]
-|            W    (pointer to something?)
+|            W/12 [checkpoint x position]
+|            W/14 [checkpoint y position]
+|            W/16 (pointer to something?)
 |        }
 |
 |        The structure repeats 8 times, for the 8 tracks in the game's demo version.
 |
-|        The [track size x] and [track size y] bytes define the size of the track in number of
-|        tiles. Note that the actual size is [track size x] * 2, [track size y] * 2.
+|        The [track width] and [track height] words define the dimensions of the track in track
+|        tile units. In Rally-Sport's demo, you will only find tracks of 64 x 64 and 128 x 128,
+|        but the release version also includes 96 x 96 as a valid size.
 |
-|        The [checkpoint x position] and [checkpoint x position] bytes give the tile on which the
-|        track's checkpoint is located. The player's car has to pass within a certain distance of
-|        this checkpoint for the current lap to be timed and valid. Note that the actual position
-|        of the checkpoint is [checkpoint x position] * 2, [checkpoint y position] * 2.
+|        The [checkpoint x position] and [checkpoint y position] words define in world units the
+|        location of the track's checkpoint. The checkpoint is a point on the track close to which
+|        the player's car must pass in order for the current lap to be considered valid. The world
+|        unit coordinates can be converted into track tile units by dividing them by 128.
 |
 |        The [palat id] and [palette id] bytes set which PALAT file and PALETTE the track
 |        uses.
@@ -464,15 +468,15 @@ TABLE OF CONTENTS:
 |
 |        Structure:
 |        {
-|            W/ 0: [pointer to prop's vertex coordinates]
-|            W/ 2: [pointer to prop's vertex indices]
-|            W/ 4: (pointer to prop's collision mesh?)
-|            B/ 6: [relative x position]
-|            B/ 7: [tile x position on the track]
-|            B/ 8: [relative y position]
-|            B/ 9: [tile y position on the track]
-|            B/10: [z position (height)]
-|            B/11: (?)
+|            W/ 0 [pointer to prop's vertex coordinates]
+|            W/ 2 [pointer to prop's vertex indices]
+|            W/ 4 (pointer to prop's collision mesh?)
+|            B/ 6 [relative x position]
+|            B/ 7 [tile x position on the track]
+|            B/ 8 [relative y position]
+|            B/ 9 [tile y position on the track]
+|            B/10 [z position (height)]
+|            B/11 (?)
 |        }
 |
 |        At the start of the header, you find three pointers to various locations in the executable
@@ -520,4 +524,3 @@ TABLE OF CONTENTS:
 |
 |
 +--------------------------------------------------------------------------------------------------
-
