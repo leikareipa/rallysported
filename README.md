@@ -13,8 +13,8 @@ The tools grant you the following powers:
 And they're available for a variety of platforms:
 - DOS
 - Linux
-- Windows (95 through 10)
-- Browsers (Chrome, Firefox, Opera, ...)
+- Windows
+- Browsers
 
 At the moment, RallySportED provides exclusive support for the demo version of Rally-Sport, which you can find online and also bundled with the binary distributions of RallySportED. The full commercial release of the game is not supported, at this time (generally speaking, the commercial release adds a couple of tracks, fixes a few bugs, and introduces split-screen support, but is otherwise the same as the demo version).
 
@@ -43,9 +43,7 @@ A small DOS utility for modifying Rally-Sport's hard-coded palettes. Written in 
 **[SETKEYS](../../../rallysported-setkeys)**\
 A small DOS utility for modifying Rally-Sport's hard-coded keyboard driving controls. Written in oldschool C++.
 
-# Content made with RallySportED
-<img align="left" src="screenshots/tracks/b4g35b_tiny.png">
+# Documentation
+Each one of the RallySportED projects listed in the [Toolset](#the-toolset) section comes with its own documentation relevant to that project.
 
-You can find tracks made with RallySportED under the [modded-content/tracks/](modded-content/tracks/) directory.
-
-Or visit [http://www.tarpeeksihyvaesoft.com/rallysported/track-list/](http://www.tarpeeksihyvaesoft.com/rallysported/track-list/) for a web version of the track listing.
+But you can also find more general documentation relating to the RallySportED ecosystem in this repo's [docs](docs/) directory; such as information about Rally-Sport's data formats, which many of the RallySportED projects expect you to refer to.
