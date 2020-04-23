@@ -1,22 +1,13 @@
-`Note!` This is an umbrella repository for the various projects that make up RallySportED. You'll find links to the individual projects, below.
-
 # RallySportED
-RallySportED is a set of tools for modding the cult 1996 DOS game Rally-Sport.
+RallySportED is a set of tools for modding the demo version of Rally-Sport, the classic 1996 DOS racing game.
 
 The tools grant you the following powers:
-- Create new tracks
-- Modify existing tracks
-- Edit textures
-- Edit the AI
-- Alter the game's hard-coded palettes
+- Create new tracks and/or modify existing ones
+- Paint textures
+- Make new AI opponents
+- Customize the game's hard-coded keyboard controls
 
-And they're available for a variety of platforms:
-- DOS
-- Linux
-- Windows
-- Browsers
-
-At the moment, RallySportED provides exclusive support for the demo version of Rally-Sport, which you can find online and also bundled with the binary distributions of RallySportED. The full commercial release of the game is not supported, at this time (generally speaking, the commercial release adds a couple of tracks, fixes a few bugs, and introduces split-screen support, but is otherwise the same as the demo version).
+# Screenshots
 
 <table>
     <tr>
@@ -28,22 +19,22 @@ At the moment, RallySportED provides exclusive support for the demo version of R
 </table>
 
 # The toolset
-**[RallySportED for DOS](../../../rallysported-dos)**\
-Track, texture, and AI editors for DOS. These tools can be run on 386/486-class machines. Written in assembly and C++.
+**[RallySportED-DOS](https://www.github.com/leikareipa/rallysported-dos)**\
+Includes the loader program required to play custom tracks in Rally-Sport. Also comes with DOS-based track, texture, and AI editors. Written in C and 386 assembly.
 
-**[RallySportED for browsers](../../../rallysported-js)**\
-Track editor for browsers. Written in JavaScript.
+**[RallySportED-js](https://www.github.com/leikareipa/rallysported-js)**\
+Create and edit tracks in your browser! Written in JavaScript.
 
-**[RallySportED for desktops](../../../rallysported-diverse)**\
-Track and texture editors for Linux and Windows (95 and up). Includes 3d acceleration through OpenGL and Glide; supports Qt and the Win32 API. Written in C++.
+**[Rally-Sport Content](https://www.github.com/leikareipa/rallysport-content)**\
+A web service to download and share custom content for the game. Written in PHP.
 
-**[SETPAL](../../../rallysported-setpal)**\
-A small DOS utility for modifying Rally-Sport's hard-coded palettes. Written in C.
+**[SETKEYS](https://www.github.com/leikareipa/rallysported-setkeys)**\
+A utility for modifying Rally-Sport's hard-coded keyboard controls.
 
-**[SETKEYS](../../../rallysported-setkeys)**\
-A small DOS utility for modifying Rally-Sport's hard-coded keyboard driving controls. Written in oldschool C++.
+**[SETPAL](https://www.github.com/leikareipa/rallysported-setpal)**\
+A utility for modifying Rally-Sport's hard-coded palettes.
 
 # Documentation
-Each one of the RallySportED projects listed in the [Toolset](#the-toolset) section comes with its own documentation relevant to that project.
+Please see the particular repositories, linked to above, for relevant documentation.
 
-But you can also find more general documentation relating to the RallySportED ecosystem in this repo's [docs](docs/) directory; such as information about Rally-Sport's data formats, which many of the RallySportED projects expect you to refer to.
+The [docs](docs/) directory in this repo provides some general documentation of interest to modders of Rally-Sport.
