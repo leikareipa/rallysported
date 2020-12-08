@@ -324,12 +324,14 @@ TABLE OF CONTENTS
 |        }
 |
 |        The TEXTURE_ATLAS block repeats for 128 * 128 bytes. It contains a texture atlas of
-|        128 x 128 pixels, which contains the car's individual textures. The TEXTURE block
-|        provides each texture's metadata.
+|        128 x 128 pixels, which in turn contains the car's individual textures. Each byte in the
+|        block is an index to the active palette, defining the color of a single pixel. (Metadata
+|        on how the atlas is to be split into individual textures is provided in the TEXTURE block.)
 |
 |        The UV_COORDINATES block contains all UV coordinate pairs used by the car model's
-|        polygons. Each polygon provides an offset in this block to where its UV coordinates
-|        are defined.
+|        polygons (each polygon provides an offset in this block to where its UV coordinates
+|        begin). The coordinates are given as successive U,V values, each being a 16-bit integer
+|        presumably in the range [-127,127].
 |
 |        The TEXTURE block repeats until a 4- or 8-byte chain of FF is encountered. Each texture
 |        is a window within the data of TEXTURE_ATLAS.
